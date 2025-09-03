@@ -39,10 +39,8 @@ export default function LineupManager() {
 
   // Player mutations
   const createPlayerMutation = useMutation({
-    mutationFn: async (player: Omit<Player, 'id'>) => {
-      const response = await apiRequest("POST", "/api/players", player);
-      return response.json();
-    },
+    mutationFn: async (player: Omit<Player, 'id'>) =>
+      apiRequest("POST", "/api/players", player),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/players"] });
       toast({ title: "Giocatore creato con successo!" });
@@ -53,10 +51,8 @@ export default function LineupManager() {
   });
 
   const updatePlayerMutation = useMutation({
-    mutationFn: async ({ id, ...player }: Partial<Player> & { id: string }) => {
-      const response = await apiRequest("PUT", `/api/players/${id}`, player);
-      return response.json();
-    },
+    mutationFn: async ({ id, ...player }: Partial<Player> & { id: string }) =>
+      apiRequest("PUT", `/api/players/${id}`, player),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/players"] });
       toast({ title: "Giocatore aggiornato con successo!" });
@@ -67,9 +63,7 @@ export default function LineupManager() {
   });
 
   const deletePlayerMutation = useMutation({
-    mutationFn: async (id: string) => {
-      await apiRequest("DELETE", `/api/players/${id}`);
-    },
+    mutationFn: async (id: string) => apiRequest("DELETE", `/api/players/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/players"] });
       toast({ title: "Giocatore eliminato con successo!" });
@@ -83,8 +77,7 @@ export default function LineupManager() {
   const updateTeamMutation = useMutation({
     mutationFn: async (team: Partial<Team> & { id: string }) => {
       const { id, ...teamData } = team;
-      const response = await apiRequest("PUT", `/api/teams/${id}`, teamData);
-      return response.json();
+      return apiRequest("PUT", `/api/teams/${id}`, teamData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/teams"] });
