@@ -17,10 +17,7 @@ export default function PostMatchPage() {
 
   const updatePlayerMutation = useMutation({
     mutationFn: async ({ playerId, rating }: { playerId: string; rating: number }) =>
-      apiRequest(`/api/players/${playerId}`, {
-        method: "PUT",
-        body: { rating },
-      }),
+      apiRequest("PUT", `/api/players/${playerId}`, { rating }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/players"] });
     },
